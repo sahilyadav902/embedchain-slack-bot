@@ -36,6 +36,8 @@ def handle_message(event_data):
                     print("Error occurred during 'query' command:", e)
             elif text.startswith("add"):
                 _, data_type, url_or_text = text.split(" ", 2)
+                if url_or_text.startswith("<") and url_or_text.endswith(">"):
+                    url_or_text = url_or_text[1:-1]
                 try:
                     chat_bot.add(data_type, url_or_text)
                     send_slack_message(message["channel"], f"Added {data_type} : {url_or_text}")
